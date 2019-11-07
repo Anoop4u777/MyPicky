@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+
+{% block title %}  {{user.username}} || {{block.super}}  {% endblock title %}
+
+{% block content %}
+<h1>{{user.username}}</h1>
+<p>{% include "snippets/follow_form.html" with username=user.username  is_following=is_following %}</p>
+<form class="form" method="GET" action=".">
+	<input type="text" placeholder="Search.."  name="q" value="{{ request.GET.q }}">
+	<button type="btn btn-default" type="submit">Search</button>
+</form>
+<hr/>
+<ul>
+{% if locations %}
+{% for rest in locations %}
+	<div class="row">
+	<div class="col-sm-12" style="border-bottom: 15px; border: 3px solid #ccc; border-radius: 10px;">
+		<div class="card card-default" >
+		<b>Restaurant: {{ rest.Restaurant_Name }}</b> 
+		<p>Place:<a href="{{request.path}}?q={{ rest.Restaurant_Location }}">{{ rest.Restaurant_Location }}</a> ,  <small> Category:<a href="{{request.path}}?q={{ rest.Restaurant_Category }}">{{ rest.Restaurant_Category }}</a> </small></p>
+			<ul>
+				{% for item in rest.item_set.all %}
+					<li><b>{{ item.name }}</b><br/>
+						
+					{% for ing in item.get_contents %}
+						<a href="{{request.path}}?q={{ing}}">{{ing}}</a>
+					{% endfor %}	
+					</li>
+				{% empty %}
+					<li><p>No item</p></li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	</div>
+
+{% endfor %}
+{% endif %}
+
+</ul>
+{% endblock content %}

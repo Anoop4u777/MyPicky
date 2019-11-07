@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+	<div class="row-sm-1" >
+	<div class="col-sm-6 text-center col-sm-offset-3">
+	<div class="card card-primary" style="border-bottom: 15px; border: 3px solid #ccc; border-radius: 10px;" >
+	{% for obj in object_list %}
+		<h3 style="color: green;"><b>{{ obj.name }}</b></h3> 
+		<h4><small>User:</small><b><a href="{% url 'profiles:detail' username=obj.user.username %}" style="color:red">{{ obj.user.username }}</a></b></h4> 
+		<p><a href="{% url 'profiles:detail' username=obj.user.username %}?q={{obj.restaurants.Restaurant_Name}}">{{ obj.restaurants.Restaurant_Name }}</a>|<a href="{% url 'profiles:detail' username=obj.user.username %}?q={{obj.restaurants.Restaurant_Location}}">{{ obj.restaurants.Restaurant_Location }}</a>|<a href="{% url 'profiles:detail' username=obj.user.username %}?q={{obj.restaurants.Restaurant_Category}}">{{ obj.restaurants.Restaurant_Category }}</a></p>
+		<p><a href="{% url 'profiles:detail' username=obj.user.username %}?q={{obj.name}}">{{obj.name}}:</a>
+		{% for ing in obj.get_contents %}
+			{{ing}}
+		{% endfor %}</p>
+	<hr/>
+	{% endfor %}
+	</div>
+	</div>
+	</div>
+
+
+{% endblock content %}

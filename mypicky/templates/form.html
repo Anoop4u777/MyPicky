@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %}  {{ title }}|| {{block.super}}  {% endblock title %}</title>
+</head>
+<body>
+	{% block content %}
+
+		{% include 'snippets/form-snippet.html' %}
+
+	{% endblock %}
+
+</body>
+</html>
